@@ -49,6 +49,12 @@ class Calculator:
                 )
                 btn.pack(side="left", expand=True, fill="both")
         """
+        #키보드로 입력 받기
+        self.root.bind("<Key>", self.on_key_press)
+        self.root.bind("<Return>", lambda event: self.on_click('='))
+        self.root.bind("<BackSpace>", lambda event: self.on_click('C'))
+
+        
     def on_click(self, char):
         if char == 'C':
             self.expression = ""
@@ -62,6 +68,8 @@ class Calculator:
 
         self.entry.delete(0, tk.END)
         self.entry.insert(tk.END, self.expression)
-
-
-
+        
+    def on_key_press(self, event):
+        key = event.char
+        if key in "0123456789+-*/.":
+            self.on_click(key) # 유효한 숫자 또는 기호(문자)를 계산기 로직으로 전달
